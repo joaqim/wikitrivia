@@ -22,9 +22,11 @@ export default function Game() {
       const items: Item[] = res.data
         .trim()
         .split("\n")
-        .map((line) => {
+        .map((line): Item => {
           return JSON.parse(line);
         })
+        // Filter out years outside of 1444 <-> 1821
+        .filter((item) => !(item.year < 1444 || item.year > 1821))
         // Filter out questions which give away their answers
         .filter((item) => !item.label.includes(String(item.year)))
         .filter((item) => !item.description.includes(String(item.year)))
